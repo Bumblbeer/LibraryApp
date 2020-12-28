@@ -50,26 +50,3 @@ class Book {
 
 }
 
-class User {
-  constructor(username, transactionList = [], id =-1) {
-    this.username = username
-    this.transactionList = transactionList
-    this.id = id
-  }
-
-  addTransaction = (transactionId) => {
-    this.transactionList = [...this.transactionList, transactionId]
-  }
-}
-
-export class Transaction {
-  constructor(bookId, userId, startDate, endDate, id = -1) {
-    this.bookId = bookId
-    this.userId = userId
-    this.startDate = startDate
-    this.endDate = endDate
-    this.id = id
-  }
-}
-
-
