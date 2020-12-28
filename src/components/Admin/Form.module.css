@@ -1,0 +1,29 @@
+.input {
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    border-color: #d9d9d9;
+    border-style: solid;
+    border-width: 2px;
+    transition-duration: .3s;
+}
+.input:focus {
+    border: #46acd4 2px solid;
+    outline: none
+}
+
+.wrapper {
+    width: 352px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    padding: 24px 32px;
+    background-color: white;
+}
+.formTitle {
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 8px;
+}
+.buttonArea {
+}
