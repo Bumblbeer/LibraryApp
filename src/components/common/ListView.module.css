@@ -1,0 +1,7 @@
+.contentWrapper {
+    grid-area: cn;
+    padding: 12px;
+    border-radius: 0 0 8px 8px;
+    border: 1px #d9d9d9 solid;
+    border-top: none;
+}

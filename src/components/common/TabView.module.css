@@ -1,0 +1,21 @@
+.wrapper {
+    max-width: 822px;
+    width: 90%;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: 48px 1fr;
+    grid-template-areas: ". sb" "mn cn";
+    margin: 32px auto 0;
+}
+.menu {
+    grid-area: mn;
+    cursor: pointer;
+    width: 80px;
+    margin-right: 24px;
+}
+
+.menuItem {
+    width: 100%;
+    text-align: right;
+    margin: 8px 0;
+}

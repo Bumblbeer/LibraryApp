@@ -1,0 +1,27 @@
+.button {
+    outline: none;
+    height: 32px;
+    border-radius: 8px;
+    border-style: solid;
+    padding: 4px;
+    transition-duration: .3s;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button i {
+    margin-right: 8px;
+}
+
+.button:hover {
+    opacity: .7;
+}
+
+.button:active {
+    transform: scale(.95);
+    transition-duration: 0.1s;
+}
+
+.button:disabled {
+    opacity: .4;
+}
