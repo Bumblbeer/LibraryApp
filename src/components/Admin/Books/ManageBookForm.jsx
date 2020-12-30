@@ -107,7 +107,7 @@ const ExampleCustomInput = ({ value, onClick }) => (<Button onClick={onClick} ti
 const Transaction = ({id, isActive}) => {
     const lib = useContext(LibraryContext)
     return <div className={s.transaction} style={isActive ? {color: '#ffc20c'} : {}}>
-        <b>User: </b> {lib.getUser(lib.getTransaction(id)?.userId)?.username || 'DELETED'} | <b>From: </b> {lib.getTransaction(id)?.startDate} | <b>Until: </b> {lib.getTransaction(id)?.endDate}
+        <b>User: </b> {lib.getUser(lib.getTransaction(id)?.userId)?.username || 'DELETED'} | <b>From: </b> {lib.getTransaction(id)?.startDate.split("-").join(".")} | <b>Until: </b> {lib.getTransaction(id)?.endDate.split("-").join(".")}
     </div>
 }
 

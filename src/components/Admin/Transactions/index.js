@@ -27,12 +27,12 @@ const TransactionList = ({query = ''}) => {
             bookTitle={lib.getBook(lib.getTransaction(detailsOf).bookId).title}
             bookAuthor={lib.getBook(lib.getTransaction(detailsOf).bookId)?.authors.join(', ')}
             userName={lib.getUser(lib.getTransaction(detailsOf).userId)?.username || 'DELETED'}
-            date={lib.getTransaction(detailsOf).startDate}
-            endDate={lib.getTransaction(detailsOf).endDate}
+            date={lib.getTransaction(detailsOf).startDate.split("-").join(".")}
+            endDate={lib.getTransaction(detailsOf).endDate.split("-").join(".")}
             close={() => showDetailsOf(-1)}
         />}
         {displayedTransactions.map((tran, id) => {
-            return <BookComponent key={id} coverURL={lib.getBook(tran.bookId)?.imageURL} authors={[lib.getUser(tran.userId)?.username || 'DELETED']} year={tran.startDate} title={lib.getBook(tran.bookId)?.title}
+            return <BookComponent key={id} coverURL={lib.getBook(tran.bookId)?.imageURL} authors={[lib.getUser(tran.userId)?.username || 'DELETED']} year={tran.startDate.split("-").join(".")} title={lib.getBook(tran.bookId)?.title}
                                   isLast={id === lib.transactions.length - 1} expand={() => showDetailsOf(tran.id)} id={tran.id}/>
         })}
     </ListView>
