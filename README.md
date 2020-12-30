@@ -4,6 +4,8 @@ This is a coursework for the univesrsity OOP course
 
 We've created an app for a small library management using React.
 
+Working demo is [here](https://bumblbeer.github.io/library/#/)
+
 ## Features:
 
 User can:
