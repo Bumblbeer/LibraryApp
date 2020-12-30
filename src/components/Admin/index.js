@@ -13,7 +13,7 @@ import TransactionList from "./Transactions";
 import ManageBookForm from "./Books/ManageBookForm";
 
 const BookDetails = ({
-                         imageURL, title, authors, year, desc, close = () => {
+                         imageURL, title, authors=[], year, desc, close = () => {
     }
                      }) => {
 
@@ -24,7 +24,7 @@ const BookDetails = ({
             </div>
             <div className={s.detailsInfo}>
                 <div className={s.detailsTitle}>{title}</div>
-                <div className={s.detailsAuthor}>{authors}</div>
+                <div className={s.detailsAuthor}>{authors.join(', ')}</div>
                 <div className={s.detailsYear}>{year}</div>
                 <div className={s.detailsDesc}>{desc}</div>
             </div>

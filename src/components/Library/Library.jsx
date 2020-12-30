@@ -7,7 +7,7 @@ import Book from "../common/Book";
 import PopUp from "../common/PopUp";
 
 const BookDetails = ({
-                         id, imageURL, title, authors, year, desc, close = () => {}, status
+                         id, imageURL, title, authors = [], year, desc, close = () => {}, status
                      }) => {
     const lib = useContext(LibraryContext)
     const availableDate = lib.getTransaction(lib.getBook(id)?.transactionList[lib.getBook(id).transactionList.length - 1])?.endDate
@@ -28,7 +28,7 @@ const BookDetails = ({
             </div>
             <div className={s.detailsInfo}>
                 <div className={s.detailsTitle}>{title}</div>
-                <div className={s.detailsAuthor}>{authors}</div>
+                <div className={s.detailsAuthor}>{authors.join(', ')}</div>
                 <div className={s.detailsYear}>{year}</div>
                 <div className={s.detailsStatus} style={{color: statusUI().color}}>{statusUI().text}</div>
                 <div className={s.detailsDesc}>{desc}</div>
