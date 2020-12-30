@@ -72,13 +72,15 @@ const ManageBookForm = ({id, onClose}) => {
                 </div>
             </div>
             <div className={s.transactionList}>
+                <h3>Transactions history:</h3>
+                {book?.transactionList.length == 0 && <p>There's no history for this book</p>}
                 {book?.transactionList.map((t, id)=><Transaction id={t} isActive={id === book?.transactionList?.length - 1 && book?.status == 2}/>)}
             </div>
             <div className={s.buttons}>
                 <Button filled={status === 1} title={'Available'} onClick={()=>setStatus(1)}/>
                 <Button filled={status === 2} color={"#46acd4"} title={'Given to'} onClick={()=>setStatus(2)}/>
-                <Button filled={status === 0} title={'Incoming'} onClick={()=>setStatus(0)}/>
-                <Button filled={status === 3} color={"red"}  title={'Utilized'} onClick={()=>setStatus(3)}/>
+                <Button filled={status === 0} color={"#adadad"} title={'Incoming'} onClick={()=>setStatus(0)}/>
+                <Button filled={status === 3} color={"#ff5e5e"}  title={'Utilized'} onClick={()=>setStatus(3)}/>
             </div>
             {status === 2 && <div className={s.options}>
                 <div className={s.searchUsers}>

@@ -87,5 +87,12 @@
 
 .transaction {
     padding: 4px;
+}
 
+.transactionList h3 {
+    font-size: 16px;
+    color: black;
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-weight: 500;
 }
