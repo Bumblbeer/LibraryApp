@@ -9,8 +9,7 @@
 }
 .menu {
     grid-area: mn;
-    cursor: pointer;
-    width: 80px;
+    width: 100px;
     margin-right: 24px;
 }
 
@@ -18,4 +17,5 @@
     width: 100%;
     text-align: right;
     margin: 8px 0;
+    cursor: pointer;
 }

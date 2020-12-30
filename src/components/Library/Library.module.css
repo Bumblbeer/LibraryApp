@@ -1,0 +1,66 @@
+.darkenScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.detailsWrapper{
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 822px;
+    display: flex;
+    flex-direction: row;
+    height: 423px;
+    padding: 16px;
+}
+
+.detailsCover{
+    height: 100%;
+    margin-right: 8px;
+}
+
+.detailsCover img{
+    height: 100%;
+    border-radius: 4px ;
+}
+
+.detailsInfo{
+    overflow-X: hidden;
+    overflow-Y: auto;
+    padding-right: 32px;
+    padding-left: 16px;
+}
+
+.detailsTitle{
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.detailsAuthor{
+    margin-bottom: 4px;
+    font-size: 24px;
+}
+
+.detailsYear{
+    font-size: 24px;
+    color: #8d8d8d;
+    margin-bottom: 4px;
+}
+.detailsStatus{
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.detailsDesc{
+    font-size: 16px;
+    text-align: justify;
+
+}

@@ -18,7 +18,7 @@ const TabView = ({screens = [], onAdd, setQuery}) => {
 
   return (
     <div className={s.wrapper}>
-      <SearchBar onClick={onAdd ? ()=>onAdd(currentScreen) : null} setQuery={setQuery}/>
+      <SearchBar onClick={onAdd && currentScreen !==2 ? ()=>onAdd(currentScreen) : null} setQuery={setQuery}/>
       <Menu items={screens.map(s=>s.title)} activeId={currentScreen} setIndex={setCurrentScreen}/>
       {screens[currentScreen].content}
     </div>
