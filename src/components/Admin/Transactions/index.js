@@ -13,15 +13,15 @@ const TransactionDetails = ({bookTitle, bookAuthor, userName, date, endDate, clo
             <div className={s.row}><b>Book: </b> <div className={s.title}>{bookTitle}</div> | {bookAuthor}</div>
                 <div className={s.row}><b>Date: </b> {date}</div>
                 <div className={s.row}><b>Until: </b> {endDate}</div>
-                {/*<div className={s.detailsYear}>From: {startDate}</div>
-                <div className={s.detailsYear}>To: {startDate}</div>*/}
         </div>
     </PopUp>
 }
 
-const TransactionList = () => {
+const TransactionList = ({query = ''}) => {
     const [detailsOf, showDetailsOf] = useState(-1)
     const lib = useContext(LibraryContext)
+
+    const displayedTransactions = query !== '' ? lib.searchTransactions(query) : lib.transactions
     return <ListView>
         {detailsOf !== -1 && <TransactionDetails
             bookTitle={lib.getBook(lib.getTransaction(detailsOf).bookId).title}
@@ -29,12 +29,11 @@ const TransactionList = () => {
             userName={lib.getUser(lib.getTransaction(detailsOf).userId)?.username || 'DELETED'}
             date={lib.getTransaction(detailsOf).startDate}
             endDate={lib.getTransaction(detailsOf).endDate}
-            //endDate={lib.getTransaction(detailsOf).endDate}
             close={() => showDetailsOf(-1)}
         />}
-        {lib.transactions.map((tran, id) => {
+        {displayedTransactions.map((tran, id) => {
             return <BookComponent key={id} coverURL={lib.getBook(tran.bookId)?.imageURL} authors={[lib.getUser(tran.userId)?.username || 'DELETED']} year={tran.startDate} title={lib.getBook(tran.bookId)?.title}
-                                  isLast={id === lib.transactions.length - 1} expand={() => showDetailsOf(id)} id={tran.id}/>
+                                  isLast={id === lib.transactions.length - 1} expand={() => showDetailsOf(tran.id)} id={tran.id}/>
         })}
     </ListView>
 }

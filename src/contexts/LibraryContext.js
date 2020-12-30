@@ -32,6 +32,7 @@ const contextShape = {
     editBook: async () => {},
     unrentBook: async () => {
     },
+    searchTransactions: ()=>{},
     fetchTransactions: async () => {
     },
     publishBook: async () => {},
@@ -66,7 +67,8 @@ export const useLibrary = () => {
             editBook,
             publishBook,
             suspendBook,
-            deleteUser
+            deleteUser,
+            searchTransactions
         }))
         init()
     }, [])
@@ -113,6 +115,7 @@ export const useLibrary = () => {
     const searchBooks = lib.searchBooks
     const searchUser = lib.searchUser
     const searchUsers = lib.searchUsers
+    const searchTransactions = lib.searchTransactions
     const getUser = lib.getUser
     const getBook = lib.getBook
     const getTransaction = lib.getTransaction

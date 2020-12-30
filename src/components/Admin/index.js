@@ -34,33 +34,42 @@ const BookDetails = ({
 
 const BookList = ({
                       editBook = () => {},
-                      manageBook = () => {}
+                      manageBook = () => {},
+                      query = ''
                   }) => {
+    const lib = useContext(LibraryContext)
     const [detailsOf, showDetailsOf] = useState(-1)
     const {books} = useContext(LibraryContext)
+
+    let displayedBooks = query !== '' ? lib.searchBooks(query) : lib.books
+
     return <ListView>
         {detailsOf !== -1 && <BookDetails
-            title={books[detailsOf].title}
-            year={books[detailsOf].year}
-            authors={books[detailsOf].authors}
-            desc={books[detailsOf].description}
-            imageURL={books[detailsOf].imageURL}
+            title={lib.getBook(detailsOf).title}
+            year={lib.getBook(detailsOf).year}
+            authors={lib.getBook(detailsOf).authors}
+            desc={lib.getBook(detailsOf).description}
+            imageURL={lib.getBook(detailsOf).imageURL}
             close={() => showDetailsOf(-1)}
         />}
-        {books.map((book, id) => {
+        {displayedBooks.map((book, id) => {
             return <BookComponent key={id} coverURL={book.imageURL} authors={book.authors} year={book.year}
                                   title={book.title}
-                                  isLast={id === books.length - 1} expand={() => showDetailsOf(id)} editBook={editBook}
+                                  isLast={id === books.length - 1} expand={() => showDetailsOf(book.id)} editBook={editBook}
                                   manageBook={manageBook}
                                   id={book.id}/>
         })}
     </ListView>
 }
 
-const UsersList = () => {
+const UsersList = ({query}) => {
+    const lib = useContext(LibraryContext)
     const {users} = useContext(LibraryContext)
+
+    let displayedUsers = query !== '' ? lib.searchUsers(query) : lib.users
+
     return <ListView>
-        {users.map((user, id) => {
+        {displayedUsers.map((user, id) => {
             return <UserComponent key={id} name={user.username} isLast={id === users.length - 1} userId={user.id}/>
         })}
     </ListView>
@@ -72,6 +81,8 @@ const Admin = () => {
     const [formShown, setFormShown] = useState(-1)
     const [editingBook, setEditingBook] = useState(undefined)
     const [managingBook, setManagingBook] = useState(-1)
+    const [query, setQuery] = useState('')
+
 
     const editBook = (id) => {
         const book = lib.getBook(id)
@@ -86,15 +97,15 @@ const Admin = () => {
     const screens = [
         {
             title: 'Books',
-            content: <BookList editBook={editBook} manageBook={manageBook}/>
+            content: <BookList editBook={editBook} manageBook={manageBook} query={query}/>
         },
         {
             title: 'Users',
-            content: <UsersList/>
+            content: <UsersList query={query}/>
         },
         {
             title: 'Transactions',
-            content: <TransactionList/>
+            content: <TransactionList query={query}/>
         }
     ]
     const submitBook = async ({title, authors, year, description, imageURL}) => {
@@ -121,7 +132,7 @@ const Admin = () => {
             setFormShown(-1)
         }}><UserForm onSubmit={submitUser}/></PopUp>}
         <Header username={'Admin'}/>
-        <TabView screens={screens} onAdd={setFormShown}/>
+        <TabView screens={screens} onAdd={setFormShown} setQuery={setQuery}/>
     </div>
 }
 

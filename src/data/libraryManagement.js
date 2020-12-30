@@ -232,9 +232,20 @@ export class Library {
     searchUser = (string) => {
         return this.users.filter(u=>u.username == string)[0]
     }
+
     searchUsers = (string = '') => {
         if (string === '') return this.users
         return this.users.filter(u=>u.username.toLowerCase().includes(string.toLowerCase()))
+    }
+
+    searchTransactions = (string = '') => {
+        if (string === '') return this.transactions
+        return this.transactions.filter(t=> { return (
+            this.getBook(t.bookId)?.title?.toLowerCase().includes(string.toLowerCase()) ||
+            this.getBook(t.bookId)?.authors?.join(' ')?.toLowerCase().includes(string.toLowerCase()) ||
+            this.getUser(t.userId)?.username?.toLowerCase().includes(string.toLowerCase())
+        )
+        })
     }
 
     editBook = async (id, {title, authors, year, description, imageURL}) => {
