@@ -130,11 +130,15 @@ fabric.properties
 !.yarn/sdks
 !.yarn/versions
 
+
 # if you are NOT using Zero-installs, then:
 # comment the following lines
 !.yarn/cache
 
 # and uncomment the following lines
 # .pnp.*
+
+.eslintcache
+/.idea
 
 # End of https://www.toptal.com/developers/gitignore/api/react,webstorm,yarn
