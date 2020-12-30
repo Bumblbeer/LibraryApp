@@ -19,7 +19,7 @@ const UserDetails = ({userId, onClose=()=>{}}) => {
 
   return <PopUp onClose={onClose}>
     <div className={s.booksWrapper}>
-      <div className={s.title}>{`${lib.getUser(userId)?.username}'s books: `}</div>
+      <div className={s.title}>{books().length == 0 ? `${lib.getUser(userId)?.username} has no books.` : `${lib.getUser(userId)?.username}'s books: `}</div>
       <div className={s.booksList}>
         {books().map((book, id)=><Book id={book?.id} title={book?.title} authors={book?.authors} coverURL={book?.imageURL} expand={()=>{}} isLast={books.length-1 == id} year={book?.year}/>)}
       </div>
