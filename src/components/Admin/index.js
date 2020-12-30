@@ -113,8 +113,13 @@ const Admin = () => {
     return <div>
         {managingBook !== -1 && <ManageBookForm id={managingBook} onClose={()=>setManagingBook(-1)}/>}
         {formShown === 0 &&
-        <PopUp onClose={() => setFormShown(-1)}><BookForm onSubmit={submitBook} initialState={editingBook}/></PopUp>}
-        {formShown === 1 && <PopUp onClose={() => setFormShown(-1)}><UserForm onSubmit={submitUser}/></PopUp>}
+        <PopUp onClose={() => {
+            setFormShown(-1)
+            setEditingBook(undefined)
+        }}><BookForm onSubmit={submitBook} initialState={editingBook}/></PopUp>}
+        {formShown === 1 && <PopUp onClose={() => {
+            setFormShown(-1)
+        }}><UserForm onSubmit={submitUser}/></PopUp>}
         <Header username={'Admin'}/>
         <TabView screens={screens} onAdd={setFormShown}/>
     </div>

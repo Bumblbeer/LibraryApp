@@ -1,0 +1,66 @@
+.userWrapper {
+    display: flex;
+    padding: 4px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px #ececec solid;
+    transition-duration: .3s;
+    cursor: pointer;
+}
+
+.userWrapper:hover {
+    background-color: #f9f9f9;
+}
+
+.userName {
+    font-size: 20px;
+    overflow: hidden;
+    max-width: 100%;
+    height: 32px;
+}
+
+.hasBooks {
+}
+
+.indicator {
+    padding: 2px;
+    font-size: 12px;
+    min-width: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 50%;
+    background-color: #4288ff;
+    color: white;
+}
+
+.booksWrapper {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+
+    width: 600px;
+}
+
+.title {
+    font-size: 24px;
+}
+
+.booksList {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.removeUser {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #8d8d8d;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    width: 100px;
+}

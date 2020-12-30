@@ -85,7 +85,7 @@ const ManageBookForm = ({id, onClose}) => {
                 <div><Input placeholder={'Search users'} value={username} onChange={e=>setUsername(e.target.value)}
                             style={isUserFound() ? {borderColor: "#7fb078"} : {}}/></div>
                 <div className={s.results}>
-                    {results}
+                    {!isUserFound() && results}
                 </div>
             </div>
                 <div> Until:</div>

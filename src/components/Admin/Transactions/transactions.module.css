@@ -1,0 +1,27 @@
+.detailsWrapper {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+.row{
+    margin-bottom: 4px;
+    font-size: 20px;
+    display: flex;
+    height: 25px;
+}
+
+.row b {
+    margin-right: 4px;
+}
+
+.title {
+    margin-right: 4px;
+    max-width: 500px;
+    height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

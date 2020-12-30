@@ -26,11 +26,17 @@ const BookForm = ({onSubmit=()=>{}, initialState}) => {
     setWaiting(false)
   }
 
+  const setYear = (e) => {
+      const pattern = /^\d{0,4}$/
+      const input = e.target.value
+      if (pattern.test(input)) setField('year', input)
+  }
+
   return <div className={s.wrapper}>
       <div className={s.formTitle}>{initialState ? "Edit book: "+initialState.title : "Add a new book"}</div>
       <Input onChange={(e)=>setField('title', e.target.value)} value={data.title} placeholder={'Title'} autoFocus={true}/>
-      <Input onChange={(e)=>setField('authors', e.target.value.split(',').map(i=>i.trim(' ')))} value={data.authors.join(', ')} placeholder={'Authors (comma-separated)'}/>
-      <Input onChange={(e)=>setField('year', e.target.value)} value={data.year} placeholder={'Year of publication'}/>
+      <Input onChange={(e)=>setField('authors', e.target.value.split(', '))} value={data.authors.join(', ')} placeholder={'Authors (comma-separated)'}/>
+      <Input onChange={setYear} value={data.year} placeholder={'Year of publication'}/>
       <InputAutosize onChange={(e)=>setField('description', e.target.value)} value={data.description} placeholder={'Description'}/>
       <Input onChange={(e)=>setField('imageURL', e.target.value)} value={data.imageURL} placeholder={'Cover image URL'}/>
       <div className={s.buttonArea}><Button title={isWaiting ? 'Wait' :'Save'} onClick={submit} disabled={disabled() || isWaiting}/></div>
