@@ -1,17 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import LibraryApp from "./LibraryApp";
+import '@fortawesome/fontawesome-free/css/all.css'
+import {HashRouter, Switch, Route} from 'react-router-dom'
+import LibraryContext, {useLibrary} from "./contexts/LibraryContext";
+import Admin from "./components/Admin";
+import StartScreen from "./components/StartScreen";
+
+const AppRouter = () => {
+
+  const library = useLibrary()
+
+  return <LibraryContext.Provider value={library}>
+    <HashRouter>
+      <Switch>
+        <Route path={'/admin'} component={Admin}/>
+        <Route path={'/user/:id'} component={LibraryApp}/>
+        <Route exact path={'/'} component={StartScreen}/>
+      </Switch>
+    </HashRouter>
+  </LibraryContext.Provider>
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppRouter/>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
