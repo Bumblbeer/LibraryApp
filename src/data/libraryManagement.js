@@ -1,5 +1,6 @@
 import {database} from "../API/API"
 import Enum from "../utils/Enum";
+import moment from 'moment'
 
 export const placeholder = 'https://minalsampat.com/wp-content/uploads/2019/12/book-placeholder.jpg'
 
@@ -33,6 +34,14 @@ class Book {
         this.id = id
     }
 
+    edit = (title, authors, year, description, imageURL) => {
+        this.title = title
+        this.authors = authors
+        this.year = year
+        this.description = description
+        this.imageURL = imageURL
+    }
+
     utilize = () => {
         this.status = UTILIZED
         return this
@@ -40,6 +49,11 @@ class Book {
 
     publish = () => {
         this.status = ACCESSIBLE
+        return this
+    }
+
+    suspend = () => {
+        this.status = ACCESSIBLE_SOON
         return this
     }
 
@@ -73,9 +87,13 @@ export class Transaction {
     constructor(bookId, userId, startDate, endDate, id = -1) {
         this.bookId = bookId
         this.userId = userId
-        this.startDate = startDate
+        this.startDate = startDate || moment().format("DD-MM-YYYY HH:mm")
         this.endDate = endDate
         this.id = id
+    }
+
+    close = () => {
+        this.endDate = moment().format("DD-MM-YYYY HH:mm")
     }
 }
 
@@ -102,6 +120,7 @@ export class Library {
                               status,
                               title,
                               year,
+                            transactionList,
                               id
                           }, index) => new Book(
                 title || "",
@@ -109,7 +128,7 @@ export class Library {
                 year || "",
                 description || "",
                 imageURL || placeholder,
-                undefined,
+                transactionList || [],
                 status,
                 id || index
             ))] : []
@@ -119,7 +138,7 @@ export class Library {
                                username,
                                transactionList,
                                id
-                           }, index) => new User(username, transactionList, id || index))] : []
+                           }, index) => new User(username, transactionList || [], id || index))] : []
 
         this.transactions = transactions ?
             [...transactions.map(({
@@ -136,15 +155,18 @@ export class Library {
     }
 
     getBook = (id) => {
-        return this.books.filter(book => book.id === id)[0]
+        if (id === undefined) return null
+        return this.books.filter(book => book.id == id)[0]
     }
 
     getTransaction = (id) => {
-        return this.transactions.filter(tran => tran.id === id)[0]
+        if (id === undefined) return null
+        return this.transactions.filter(tran => tran.id == id)[0]
     }
 
     getUser = (id) => {
-        return this.users.filter(user => user.id === id)[0]
+        if (id === undefined) return null
+        return this.users.filter(user => user.id == id)[0]
     }
 
     addBook = async (title, authors, year, description, imageURL) => {
@@ -155,20 +177,23 @@ export class Library {
     }
 
     utilizeBook = async (id) => {
-        const newThis = {...this, books: this.books.map(b => b.id !== id ? b.utilize() : b)}
-        this.books = newThis.books
+        const book = this.getBook(id)
+        if (book.status == 2)
+            this.getTransaction(book.transactionList[book.transactionList.length - 1])?.close()
+        book.utilize()
         await database.push(this)
     }
 
     publishBook = async (id) => {
-        this.getBook(id).publish()
-        /* const newThis = {...this, books: this.books.map(book=>{return book.id === id ? book.publish() : book})}
-         this.books = newThis.books*/
+        const book = this.getBook(id)
+        if (book.status == 2)
+            this.getTransaction(book.transactionList[book.transactionList.length - 1])?.close()
+        book.publish()
         await database.push(this)
     }
 
     createTransaction = async (bookId, userId, startDate, endDate) => {
-        const newTran = new Transaction(bookId, userId, startDate, endDate, this.transactions.length)
+        const newTran = new Transaction(bookId, userId, false, endDate, this.transactions.length)
         this.transactions = [...this.transactions, newTran]
         await database.push(this)
         return newTran
@@ -176,12 +201,11 @@ export class Library {
 
     rentBook = async (bookId, userId, startDate, endDate) => {
         const {id} = await this.createTransaction(bookId, userId, startDate, endDate)
-        /*const newBooks = this.books.map(book=>book.id === bookId ? book.rent(id) : book)
-        const newUsers = this.users.map(user=>user.id === userId ? user.addTransaction(id) : user)
-        this.books = newBooks
-        this.users = newUsers*/
-        this.getBook(bookId).rent(id)
-        this.getUser(id).addTransaction(id)
+        const book = this.getBook(bookId)
+        if (book.status == 2)
+            this.getTransaction(book.transactionList[book.transactionList.length - 1])?.close()
+        book.rent(id)
+        this.getUser(userId).addTransaction(id)
         await database.push(this)
     }
 
@@ -192,7 +216,9 @@ export class Library {
 
 
     addUser = async (name) => {
-        this.users = [...this.users, new User(name, [], this.users.length)]
+        let possibleId = this.users.length
+        while (this.transactions.some(t=>t.userId == possibleId) || this.users.some(u=>u.id == possibleId)) possibleId++
+        this.users = [...this.users, new User(name, [], possibleId)]
         await database.push(this)
     }
 
@@ -203,6 +229,27 @@ export class Library {
             }
         )
     }
+    searchUser = (string) => {
+        return this.users.filter(u=>u.username == string)[0]
+    }
+    searchUsers = (string = '') => {
+        if (string === '') return this.users
+        return this.users.filter(u=>u.username.toLowerCase().includes(string.toLowerCase()))
+    }
 
+    editBook = async (id, {title, authors, year, description, imageURL}) => {
+        this.getBook(id).edit(title, authors, year, description, imageURL)
+        await database.push(this)
+    }
+
+    suspendBook = async (id) => {
+        this.getBook(id).suspend()
+        await database.push(this)
+    }
+
+    deleteUser = async (userId) => {
+        this.users = this.users.filter((user)=>user.id !== userId)
+        await database.push(this)
+    }
 }
 
