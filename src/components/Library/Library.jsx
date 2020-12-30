@@ -10,14 +10,14 @@ const BookDetails = ({
                          id, imageURL, title, authors = [], year, desc, close = () => {}, status
                      }) => {
     const lib = useContext(LibraryContext)
-    const availableDate = lib.getTransaction(lib.getBook(id)?.transactionList[lib.getBook(id).transactionList.length - 1])?.endDate
+    const transactionEndDate = lib.getTransaction(lib.getBook(id)?.transactionList[lib.getBook(id).transactionList.length - 1])?.endDate
     const statusUI = () => {
         switch (status) {
             case 0: return {text: "Will be available soon", color: '#9d9d9d'}
             case 1: return {text: "Available", color: '#259f00'}
-            case 2: return {text: "Will be available on " + availableDate.split("-").join("."), color: '#9d9d9d'}
+            case 2: return {text: "Will be available on " + transactionEndDate.split("-").join("."), color: '#9d9d9d'}
             case 3: return {text: "Utilized", color: '#9d9d9d'}
-            case 4: return {text: "Is yours for now", color: '#46acd4'}
+            case 4: return {text: "Yours until " + transactionEndDate.split("-").join("."), color: '#46acd4'}
         }
     }
 
