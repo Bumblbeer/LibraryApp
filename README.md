@@ -28,7 +28,7 @@ Admin can:
 ### Requirements:
 * NodeJS with npm or yarn
 
-## Steps:
+### Steps:
 1. Clone the repo
 2. Run ```yarn install``` or ```npm install``` from the root folder
 3. Run ```yarn start``` or ```npm start``` to launch the app on localhost
